@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane prefHeight="400.0" prefWidth="450" stylesheets="@HelpStyle.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HelpController">
+   <children>
+      <Button fx:id="closeButton" layoutX="22.0" layoutY="344.0" mnemonicParsing="false" onAction="#switchToMyView" text="Go Back" />
+      <TextArea layoutX="116.0" layoutY="42.0" prefHeight="312.0" prefWidth="392.0" text="Help Sonic get to EggMan.&#10;to move and try to get him you can use the numpad keys:&#10;8:UP&#10;2:DOWN&#10;6:RIGHT&#10;4:LEFT&#10;7:TOP LEFT&#10;9:TOP RIGHT&#10;3:BOTTOM RIGHT&#10;1:BOTTOM LEFT&#10;If you want to see the currect path to EggMan just press:&#10;&quot;solve maze&quot; button and follow the rings for Sonic to collect.&#10;" />
+   </children>
+</AnchorPane>
