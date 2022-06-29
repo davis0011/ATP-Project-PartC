@@ -54,6 +54,26 @@ public class MyViewModel {
             return null;
         return model.moveRight();
     }
+    public Pair<Integer, Integer> moveRightUp() {
+        if(model == null)
+            return null;
+        return model.moveRightUp();
+    }
+    public Pair<Integer, Integer> moveLeftUp() {
+        if(model == null)
+            return null;
+        return model.moveLeftUp();
+    }
+    public Pair<Integer, Integer> moveLeftDown() {
+        if(model == null)
+            return null;
+        return model.moveLeftDown();
+    }
+    public Pair<Integer, Integer> moveRightDown() {
+        if(model == null)
+            return null;
+        return model.moveRightDown();
+    }
     public boolean save(File file) throws IOException {
         if(model == null)
             return false;
@@ -65,5 +85,10 @@ public class MyViewModel {
         if(model == null)
             model = new MyModel();
         return model.loadFile(file);
+    }
+    public int[][] getactualmaze(){
+        if(model == null)
+            return null;
+        return model.getActualMaze();
     }
 }

@@ -68,7 +68,6 @@ public class MazeDisplayer extends Canvas {
         {
             return false;
         }
-
         graphicsContext.clearRect(x,y,cellWidth,cellHeight);
         graphicsContext.drawImage(sonic,x, y, cellWidth, cellHeight);
         x = (col+origincol) * cellWidth;

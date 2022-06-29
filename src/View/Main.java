@@ -27,12 +27,12 @@ public class Main extends Application{
         String path = "resources/sonicmusic.mp3";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setVolume(0.1);
-        mediaPlayer.setAutoPlay(false);
+        mediaPlayer.setVolume(0.3);
+        mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
         //URL hello = new File("C:\\Users\\david\\Desktop\\finalProject\\ATP-Project-PartC\\src\\main\\java\\View\\MyView.fxml").toURI().toURL();
         FXMLLoader root = new FXMLLoader(getClass().getResource("MyView.fxml"));
-        Scene scene = new Scene(root.load(),800,800);
+        Scene scene = new Scene(root.load(),900,700);
         stage.setTitle("Sonic Maze");
         //stage.initStyle(StageStyle.TRANSPARENT);
         MyViewController controller = root.getController();
@@ -55,6 +55,22 @@ public class Main extends Application{
                         }
                         case NUMPAD2: {
                             isdone[0] = controller.move(2);
+                            break;
+                        }
+                        case NUMPAD9: {
+                            isdone[0] = controller.move(9);
+                            break;
+                        }
+                        case NUMPAD7: {
+                            isdone[0] = controller.move(7);
+                            break;
+                        }
+                        case NUMPAD1: {
+                            isdone[0] = controller.move(1);
+                            break;
+                        }
+                        case NUMPAD3: {
+                            isdone[0] = controller.move(3);
                             break;
                         }
                     }

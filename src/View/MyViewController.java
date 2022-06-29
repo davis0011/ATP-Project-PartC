@@ -4,6 +4,8 @@ import Server.Configurations;
 import ViewModel.MyViewModel;
 import algorithms.mazeGenerators.Position;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -84,8 +86,6 @@ public class MyViewController implements IView, Initializable {
         Stage stage1 = new Stage();
         stage1.setScene(new Scene(root));
         stage1.show();
-
-
     }
     public void about(ActionEvent event){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -182,9 +182,33 @@ public class MyViewController implements IView, Initializable {
             return mazeDisplayer.move(vm.moveLeft(),0,1);
         else if(num == 6)
             return mazeDisplayer.move(vm.moveRight(),0,-1);
+        else if (num == 9) {
+            return mazeDisplayer.move(vm.moveRightUp(),1,-1);
+        }
+        else if (num == 7) {
+            return mazeDisplayer.move(vm.moveLeftUp(),1,1);
+        }
+        else if (num == 1) {
+            return mazeDisplayer.move(vm.moveLeftDown(),-1,1);
+        }
+        else if (num == 3) {
+            return mazeDisplayer.move(vm.moveRightDown(),-1,-1);
+        }
         return false;
     }
-
+    InvalidationListener listener = new InvalidationListener(){
+        @Override
+        public void invalidated(Observable o) {
+            if(vm == null)
+                return;
+            mazeDisplayer.drawMaze(vm.getactualmaze(),vm.getStrat(),vm.getGoal());
+        }
+    };
+    public void changedSize(ActionEvent actionEvent)
+    {
+        mazeDisplayer.widthProperty().addListener(listener);
+        mazeDisplayer.heightProperty().addListener(listener);
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

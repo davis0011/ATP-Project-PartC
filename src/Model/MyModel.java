@@ -7,6 +7,8 @@ import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Pair;
 
 import java.io.*;
@@ -63,10 +65,20 @@ public class MyModel implements IModel{
         }
         return true;
     }
+    private void hitwall(){
+        String path = "resources/loseRing.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(0.6);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play();
+    }
     public Pair<Integer,Integer> moveUp(){
         if(currstate.getRowIndex()!=0)
-            if(actualMaze[currstate.getRowIndex()-1][currstate.getColumnIndex()]==1)
+            if(actualMaze[currstate.getRowIndex()-1][currstate.getColumnIndex()]==1) {
+                hitwall();
                 return null;
+            }
             else
                 currstate.setRow(currstate.getRowIndex()-1);
         else{
@@ -77,8 +89,10 @@ public class MyModel implements IModel{
     }
     public Pair<Integer,Integer> moveLeft(){
         if(currstate.getColumnIndex()!=0)
-            if(actualMaze[currstate.getRowIndex()][currstate.getColumnIndex()-1]==1)
+            if(actualMaze[currstate.getRowIndex()][currstate.getColumnIndex()-1]==1) {
+                hitwall();
                 return null;
+            }
             else
                 currstate.setCol(currstate.getColumnIndex()-1);
         else{
@@ -89,8 +103,10 @@ public class MyModel implements IModel{
     }
     public Pair<Integer,Integer> moveDown(){
         if(currstate.getRowIndex()<actualMaze.length-1)
-            if(actualMaze[currstate.getRowIndex()+1][currstate.getColumnIndex()]==1)
+            if(actualMaze[currstate.getRowIndex()+1][currstate.getColumnIndex()]==1) {
+                hitwall();
                 return null;
+            }
             else
                 currstate.setRow(currstate.getRowIndex()+1);
         else{
@@ -101,13 +117,87 @@ public class MyModel implements IModel{
     }
     public Pair<Integer,Integer> moveRight(){
         if(currstate.getColumnIndex()<actualMaze[0].length-1)
-            if(actualMaze[currstate.getRowIndex()][currstate.getColumnIndex()+1]==1)
+            if(actualMaze[currstate.getRowIndex()][currstate.getColumnIndex()+1]==1) {
+                hitwall();
                 return null;
+            }
             else
                 currstate.setCol(currstate.getColumnIndex()+1);
         else{
             return null;
         }
+        Pair<Integer,Integer> position = new Pair<>(currstate.getRowIndex(),currstate.getColumnIndex());
+        return position;
+    }
+    public Pair<Integer,Integer> moveRightUp(){
+        if(currstate.getColumnIndex()<actualMaze[0].length-1&&currstate.getRowIndex()!=0) {
+            if (actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex() + 1] == 1)
+                return null;
+            else if (actualMaze[currstate.getRowIndex()][currstate.getColumnIndex() + 1] == 0 ||
+                    actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex()] == 0) {
+                currstate.setRow(currstate.getRowIndex() - 1);
+                currstate.setCol(currstate.getColumnIndex() + 1);
+            } else {
+                hitwall();
+                return null;
+            }
+        }
+        else
+            return null;
+        Pair<Integer,Integer> position = new Pair<>(currstate.getRowIndex(),currstate.getColumnIndex());
+        return position;
+    }
+    public Pair<Integer,Integer> moveLeftUp(){
+        if(currstate.getColumnIndex()!=0&&currstate.getRowIndex()!=0) {
+            if (actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex() - 1] == 1)
+                return null;
+            else if (actualMaze[currstate.getRowIndex()][currstate.getColumnIndex() - 1] == 0 ||
+                    actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex()] == 0) {
+                currstate.setRow(currstate.getRowIndex() - 1);
+                currstate.setCol(currstate.getColumnIndex() - 1);
+            } else {
+                hitwall();
+                return null;
+            }
+        }
+        else
+            return null;
+        Pair<Integer,Integer> position = new Pair<>(currstate.getRowIndex(),currstate.getColumnIndex());
+        return position;
+    }
+    public Pair<Integer,Integer> moveLeftDown(){
+        if(currstate.getColumnIndex()!=0&&currstate.getRowIndex()<actualMaze.length-1) {
+            if (actualMaze[currstate.getRowIndex() + 1][currstate.getColumnIndex() - 1] == 1)
+                return null;
+            else if (actualMaze[currstate.getRowIndex()][currstate.getColumnIndex() - 1] == 0 ||
+                    actualMaze[currstate.getRowIndex() + 1][currstate.getColumnIndex()] == 0) {
+                currstate.setRow(currstate.getRowIndex() + 1);
+                currstate.setCol(currstate.getColumnIndex() - 1);
+            } else {
+                hitwall();
+                return null;
+            }
+        }
+        else
+            return null;
+        Pair<Integer,Integer> position = new Pair<>(currstate.getRowIndex(),currstate.getColumnIndex());
+        return position;
+    }
+    public Pair<Integer,Integer> moveRightDown(){
+        if(currstate.getColumnIndex()<actualMaze[0].length-1&&currstate.getRowIndex()<actualMaze.length-1) {
+            if (actualMaze[currstate.getRowIndex() + 1][currstate.getColumnIndex() + 1] == 1)
+                return null;
+            else if (actualMaze[currstate.getRowIndex()][currstate.getColumnIndex() + 1] == 0 ||
+                    actualMaze[currstate.getRowIndex() + 1][currstate.getColumnIndex()] == 0) {
+                currstate.setRow(currstate.getRowIndex() + 1);
+                currstate.setCol(currstate.getColumnIndex() + 1);
+            } else {
+                hitwall();
+                return null;
+            }
+        }
+        else
+            return null;
         Pair<Integer,Integer> position = new Pair<>(currstate.getRowIndex(),currstate.getColumnIndex());
         return position;
     }
@@ -131,5 +221,8 @@ public class MyModel implements IModel{
         this.actualMaze = maze.getFullMaze();
         this.currstate = maze.getStartPosition();
         return actualMaze;
+    }
+    public int[][] getActualMaze(){
+        return this.actualMaze;
     }
 }
