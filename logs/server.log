@@ -1,0 +1,11 @@
+2022.07.02 23:04:05.536 INFO  Model.MyModel - Maze number: 1 has been generated
+2022.07.02 23:04:07.012 INFO  Model.MyModel - Maze solved! we used the best first search algorithm
+2022.07.02 23:04:15.155 INFO  Model.MyModel - Maze number: 2 has been generated
+2022.07.02 23:04:16.819 INFO  Model.MyModel - Maze solved! we used the best first search algorithm
+2022.07.02 23:19:35.022 ERROR Model.MyModel - Failed attempt to solve maze that is not exist...
+2022.07.02 23:19:36.946 ERROR Model.MyModel - Failed attempt to solve maze that is not exist...
+2022.07.02 23:19:39.455 ERROR Model.MyModel - Failed attempt to solve maze that is not exist...
+2022.07.02 23:22:41.146 INFO  Model.MyModel - Maze number: 1 has been generated
+2022.07.02 23:23:11.992 INFO  Model.MyModel - Maze number: 2 has been generated
+2022.07.02 23:37:49.401 INFO  Model.MyModel - The maze: maze1 has been loaded
+2022.07.02 23:38:03.937 INFO  Model.MyModel - Maze solved! we used the best first search algorithm

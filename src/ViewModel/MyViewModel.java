@@ -91,4 +91,10 @@ public class MyViewModel {
             return null;
         return model.getActualMaze();
     }
+
+    public void writeError(String s,Exception e) {
+        if(model == null)
+            model = new MyModel();
+        model.writeError(s,e);
+    }
 }

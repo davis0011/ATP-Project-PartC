@@ -43,7 +43,7 @@ public class MyViewController implements IView, Initializable {
     {
         this.isdone = val;
     }
-    public void generateMaze(ActionEvent actionEvent) {
+/*    public void generateMaze(ActionEvent actionEvent) {
         if(vm == null)
             vm = new MyViewModel();
         int rows = -1;
@@ -67,7 +67,7 @@ public class MyViewController implements IView, Initializable {
         goal = vm.getGoal();
         mazeDisplayer.drawMaze(maze,start,goal);
         Main.setIsdone(false);
-    }
+    }*/
     public void properties(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         File res = new File(String.valueOf(MyViewController.class.getResource("resources/config.properties")));
@@ -135,6 +135,8 @@ public class MyViewController implements IView, Initializable {
         alert.showAndWait();
     }*/
     public void load(ActionEvent actionEvent) throws IOException {
+        if(vm == null)
+            vm = new MyViewModel();
         FileChooser chooser = new FileChooser();
         Stage stage1 = new Stage();
         File file = chooser.showOpenDialog(stage1);
@@ -145,6 +147,7 @@ public class MyViewController implements IView, Initializable {
         }
         catch (Exception e)
         {
+            vm.writeError("Failed to load the file...",e);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Failed to load maze");
             alert.setContentText("Please try again");
@@ -162,6 +165,7 @@ public class MyViewController implements IView, Initializable {
             vm = new MyViewModel();
         if(!vm.isThereMaze())
         {
+            vm.writeError("Failed attempt to solve maze that is not exist...",null);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("No maze yet to solve");
             alert.setContentText("Generate maze first to solve it.");

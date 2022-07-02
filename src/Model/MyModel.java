@@ -13,6 +13,10 @@ import javafx.util.Pair;
 
 import java.io.*;
 import java.util.ArrayList;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
 
 public class MyModel implements IModel{
     Maze maze;
@@ -22,8 +26,9 @@ public class MyModel implements IModel{
     SearchableMaze search;
     public IMazeGenerator generator;
     public Position currpos;
-    private MyCompressorOutputStream compress;
-    private MyDecompressorInputStream decompress;
+    public int i=1;
+    private boolean isSolved = false;
+    private static final Logger LOG = LogManager.getLogger();
 
     @Override
     public int[][] genMaze(int rows, int cols) {
@@ -33,6 +38,9 @@ public class MyModel implements IModel{
         this.maze = generator.generate(rows, cols);
         this.actualMaze = maze.getFullMaze();
         this.currstate = maze.getStartPosition();
+        LOG.info("Maze number: "+i+" has been generated");
+        isSolved = false;
+        i++;
         return actualMaze;
     }
     public Position getStart()
@@ -55,6 +63,10 @@ public class MyModel implements IModel{
             row = state.getPosition().getRowIndex();
             col = state.getPosition().getColumnIndex();
             tupArr.add(new Pair<>(row,col));
+        }
+        if(!isSolved) {
+            isSolved = true;
+            LOG.info("Maze solved! we used the best first search algorithm");
         }
         return tupArr;
     }
@@ -211,12 +223,17 @@ public class MyModel implements IModel{
         Pair<Integer,Integer> position = new Pair<>(currstate.getRowIndex(),currstate.getColumnIndex());
         return position;
     }
-    public boolean savefile(File file) throws IOException {
+    public boolean savefile(File file) {
         if(!thereIsMaze)
             return false;
-        FileOutputStream fi = new FileOutputStream(file);
-        ObjectOutputStream obj = new ObjectOutputStream(fi);
-        fi.write(maze.toByteArray());
+        try {
+            FileOutputStream fi = new FileOutputStream(file);
+            ObjectOutputStream obj = new ObjectOutputStream(fi);
+            fi.write(maze.toByteArray());
+        } catch (IOException e) {
+            LOG.error("Failed to save the maze...",e);
+            return false;
+        }
         return true;
     }
 
@@ -230,9 +247,19 @@ public class MyModel implements IModel{
         this.maze = new Maze(fi.readAllBytes());
         this.actualMaze = maze.getFullMaze();
         this.currstate = maze.getStartPosition();
+        isSolved = false;
+        LOG.info("The maze: "+ file.getName()+" has been loaded");
         return actualMaze;
     }
     public int[][] getActualMaze(){
         return this.actualMaze;
+    }
+
+    public void writeError(String s,Exception e) {
+        if(e==null)
+            LOG.error(s);
+        else{
+            LOG.error(s,e);
+        }
     }
 }
