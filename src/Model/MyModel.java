@@ -131,8 +131,10 @@ public class MyModel implements IModel{
     }
     public Pair<Integer,Integer> moveRightUp(){
         if(currstate.getColumnIndex()<actualMaze[0].length-1&&currstate.getRowIndex()!=0) {
-            if (actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex() + 1] == 1)
+            if (actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex() + 1] == 1) {
+                hitwall();
                 return null;
+            }
             else if (actualMaze[currstate.getRowIndex()][currstate.getColumnIndex() + 1] == 0 ||
                     actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex()] == 0) {
                 currstate.setRow(currstate.getRowIndex() - 1);
@@ -149,8 +151,10 @@ public class MyModel implements IModel{
     }
     public Pair<Integer,Integer> moveLeftUp(){
         if(currstate.getColumnIndex()!=0&&currstate.getRowIndex()!=0) {
-            if (actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex() - 1] == 1)
+            if (actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex() - 1] == 1) {
+                hitwall();
                 return null;
+            }
             else if (actualMaze[currstate.getRowIndex()][currstate.getColumnIndex() - 1] == 0 ||
                     actualMaze[currstate.getRowIndex() - 1][currstate.getColumnIndex()] == 0) {
                 currstate.setRow(currstate.getRowIndex() - 1);
@@ -168,7 +172,10 @@ public class MyModel implements IModel{
     public Pair<Integer,Integer> moveLeftDown(){
         if(currstate.getColumnIndex()!=0&&currstate.getRowIndex()<actualMaze.length-1) {
             if (actualMaze[currstate.getRowIndex() + 1][currstate.getColumnIndex() - 1] == 1)
+            {
+                hitwall();
                 return null;
+            }
             else if (actualMaze[currstate.getRowIndex()][currstate.getColumnIndex() - 1] == 0 ||
                     actualMaze[currstate.getRowIndex() + 1][currstate.getColumnIndex()] == 0) {
                 currstate.setRow(currstate.getRowIndex() + 1);
@@ -186,7 +193,10 @@ public class MyModel implements IModel{
     public Pair<Integer,Integer> moveRightDown(){
         if(currstate.getColumnIndex()<actualMaze[0].length-1&&currstate.getRowIndex()<actualMaze.length-1) {
             if (actualMaze[currstate.getRowIndex() + 1][currstate.getColumnIndex() + 1] == 1)
+            {
+                hitwall();
                 return null;
+            }
             else if (actualMaze[currstate.getRowIndex()][currstate.getColumnIndex() + 1] == 0 ||
                     actualMaze[currstate.getRowIndex() + 1][currstate.getColumnIndex()] == 0) {
                 currstate.setRow(currstate.getRowIndex() + 1);

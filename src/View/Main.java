@@ -29,6 +29,11 @@ public class Main extends Application{
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setVolume(0.3);
         mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                mediaPlayer.seek(Duration.ZERO);
+            }
+        });
         mediaPlayer.play();
         //URL hello = new File("C:\\Users\\david\\Desktop\\finalProject\\ATP-Project-PartC\\src\\main\\java\\View\\MyView.fxml").toURI().toURL();
         FXMLLoader root = new FXMLLoader(getClass().getResource("MyView.fxml"));
@@ -97,6 +102,8 @@ public class Main extends Application{
         });
 
         stage.setScene(scene);
+        MazeDisplayer disp = controller.mazeDisplayer;
+        disp.resize(600,700);
         stage.show();
     }
     public static void setIsdone(boolean val)

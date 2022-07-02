@@ -126,14 +126,14 @@ public class MyViewController implements IView, Initializable {
             boolean succes = vm.save(sol);
 
     }
-    public void newmaze(){
+/*    public void newmaze(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("How to create new maze:");
         alert.setContentText("To create new maze:\n In the first textbox put rows number\n" +
                 "in the second textbox put collumns number.\n" +
                 "then press gen maze.");
         alert.showAndWait();
-    }
+    }*/
     public void load(ActionEvent actionEvent) throws IOException {
         FileChooser chooser = new FileChooser();
         Stage stage1 = new Stage();
@@ -204,8 +204,44 @@ public class MyViewController implements IView, Initializable {
             mazeDisplayer.drawMaze(vm.getactualmaze(),vm.getStrat(),vm.getGoal());
         }
     };
+    public void showalert(String titel, String content)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(titel);
+        alert.setContentText(content);
+        alert.showAndWait();
+        return;
+    }
+    public void newmaze(ActionEvent actionEvent)
+    {
+        int rows,cols;
+        try {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setHeaderText("Please enter number of rows");
+            dialog.showAndWait();
+            rows = Integer.parseInt(dialog.getEditor().getText());
+            dialog = new TextInputDialog();
+            dialog.setHeaderText("Please enter number of columns");
+            dialog.showAndWait();
+            cols = Integer.parseInt(dialog.getEditor().getText());
+            if(rows<0||cols<0){throw new Exception();}
+        }
+        catch (Exception e) {
+            showalert("Sonic isn't the sharpest tool in the shed, he doesn't understand, give him whole numbers","");
+            return;
+        }
+        if(vm == null)
+            vm = new MyViewModel();
+        int[][] maze = vm.genMaze(rows,cols);
+        Position start,goal;
+        start = vm.getStrat();
+        goal = vm.getGoal();
+        mazeDisplayer.drawMaze(maze,start,goal);
+        Main.setIsdone(false);
+    }
     public void changedSize(ActionEvent actionEvent)
     {
+
         mazeDisplayer.widthProperty().addListener(listener);
         mazeDisplayer.heightProperty().addListener(listener);
     }
