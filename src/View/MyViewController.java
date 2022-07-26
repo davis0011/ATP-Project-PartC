@@ -73,7 +73,7 @@ public class MyViewController implements IView, Initializable {
         File res = new File(String.valueOf(MyViewController.class.getResource("resources/config.properties")));
         Configurations config = Configurations.getInstance();
         String algo = config.getConfig("server.mazeGeneratingAlgorithm");
-        alert.setHeaderText(algo);//todo fix
+        alert.setHeaderText("algorithm:"+algo+"\n"+"solved using:"+config.getConfig("server.mazeSearchingAlgorithm")+"\n");//todo fix
         alert.show();
     }
     public void quit(){
