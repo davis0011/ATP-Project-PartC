@@ -37,7 +37,7 @@ public class Main extends Application{
         mediaPlayer.play();
         //URL hello = new File("C:\\Users\\david\\Desktop\\finalProject\\ATP-Project-PartC\\src\\main\\java\\View\\MyView.fxml").toURI().toURL();
         FXMLLoader root = new FXMLLoader(getClass().getResource("MyView.fxml"));
-        Scene scene = new Scene(root.load(),900,700);
+        Scene scene = new Scene(root.load());
         stage.setTitle("Sonic Maze");
         //stage.initStyle(StageStyle.TRANSPARENT);
         MyViewController controller = root.getController();
@@ -103,7 +103,11 @@ public class Main extends Application{
 
         stage.setScene(scene);
         MazeDisplayer disp = controller.mazeDisplayer;
-        disp.resize(600,700);
+//        disp.widthProperty().bind(
+//                stage.widthProperty());
+//        disp.heightProperty().bind(
+//                stage.heightProperty());
+        //disp.resize(600,700);
         stage.show();
     }
     public static void setIsdone(boolean val)

@@ -13,8 +13,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class MazeDisplayer extends Canvas {
+
     public MazeDisplayer(){
         super();
+        widthProperty().addListener(evt -> drawMaze(maze,start,goal));
+        heightProperty().addListener(evt -> drawMaze(maze,start,goal));
     }
     private int[][] maze;
     private Position start,goal;
